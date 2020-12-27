@@ -1,6 +1,8 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-class Validate extends React.Component {
+
+class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,4 +21,9 @@ class Validate extends React.Component {
   }
 }
 
-export default Validate;
+ErrorBoundary.propTypes = {
+  children: PropTypes.object,
+};
+
+
+export default ErrorBoundary;

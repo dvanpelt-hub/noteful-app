@@ -18,7 +18,6 @@ export default class NotePageNav extends React.Component {
   static contextType = ApiContext;
 
   render() {
-    console.log(this.props)
     const { notes, folders, } = this.context
     const { noteId } = this.props.match.params
     const note = findNote(notes, noteId) || {}

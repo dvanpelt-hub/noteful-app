@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import config from "../config";
 import ApiContext from "../ApiContext";
-import Validate from "../Validate/Validate";
+import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 
 class AddNote extends React.Component {
   static defaultProps = {
@@ -134,7 +134,7 @@ class AddNote extends React.Component {
           submitted, click on the Noteful icon to return to the main page.
         </h3>
         <br />
-        <Validate>
+        <ErrorBoundary>
           <select
             key={1}
             required
@@ -146,12 +146,12 @@ class AddNote extends React.Component {
             <option key={1}>Choose a folder</option>
             {mappedFolders}
           </select>
-        </Validate>
+        </ErrorBoundary>
         <br />
         <label htmlFor="name">
           <h3>Add a name for the note</h3>
         </label>
-        <Validate>
+        <ErrorBoundary>
           <input
             required
             name="name"
@@ -160,11 +160,11 @@ class AddNote extends React.Component {
             onChange={this.handleChange}
             disabled={this.state.folderId === ""}
           />
-        </Validate>
+        </ErrorBoundary>
         <label htmlFor="content">
           <h3>Add your note!</h3>
         </label>
-        <Validate>
+        <ErrorBoundary>
           <input
             required
             name="content"
@@ -174,7 +174,7 @@ class AddNote extends React.Component {
             defaultValue=""
             disabled={this.state.name.length < 3}
           />
-        </Validate>
+        </ErrorBoundary>
         <br />
         <button type="submit">Create Note</button>
         {this.state.totalErrors !== null ? (

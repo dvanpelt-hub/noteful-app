@@ -96,7 +96,6 @@ class App extends Component {
 
   //Conducts the App render. Creates a variable called value that contains a set of objects. Notes and folders pertain to state, and deleteNote is the method. These are passed to APIContext to 'create, update, and store the context' of the app.
   render() {
-    console.log("Rendered");
     const value = {
       notes: this.state.notes,
       folders: this.state.folders,
