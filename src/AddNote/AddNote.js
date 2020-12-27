@@ -6,7 +6,7 @@ import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 
 class AddNote extends React.Component {
   static defaultProps = {
-    addNote: () => {},
+    onAddNote: () => {},
   };
   static contextType = ApiContext;
 
@@ -32,7 +32,7 @@ class AddNote extends React.Component {
       count = count - 1;
       this.setState({ folderIdMessage: "" });
     }
-    if (this.state.name !== "") {
+    if (this.state.name.length > 0) {
       count = count - 1;
       this.setState((prevState) => ({
         errors: {
@@ -41,7 +41,7 @@ class AddNote extends React.Component {
         },
       }));
     }
-    if (this.state.content !== "") {
+    if (this.state.content.length > 0) {
       count = count - 1;
       this.setState((prevState) => ({
         errors: {
@@ -101,7 +101,8 @@ class AddNote extends React.Component {
           name.value = "";
           content.value = "";
           folderId = "";
-          this.context.addNote(responseJson);
+          this.props.onAddNote(responseJson);
+          this.props.history.push("/");
         })
         .catch((error) => {
           this.setState(() => ({ notefulError: error }));
@@ -129,8 +130,7 @@ class AddNote extends React.Component {
     return (
       <form onSubmit={this.handleAddNote}>
         <h3 style={{ color: "white" }}>
-          Please complete the form below by typing in the empty fields! Once
-          submitted, click on the Noteful icon to return to the main page.
+          Please complete the form below by typing in the empty fields!
         </h3>
         <br />
         <ErrorBoundary>
@@ -171,24 +171,21 @@ class AddNote extends React.Component {
             type="text"
             id="content"
             defaultValue=""
-            disabled={this.state.name.length < 3}
+            disabled={this.state.name.length < 1}
           />
         </ErrorBoundary>
         <br />
         <button type="submit" disabled={!this.state.isFormValid}>
           Create Note
         </button>
-        {this.state.totalErrors !== null ? (
-          <p>Form is {this.state.isFormValid ? "VALID" : "INVALID"}</p>
-        ) : null}
       </form>
     );
   }
 }
 
 AddNote.propTypes = {
-  name: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
+  name: PropTypes.string,
+  id: PropTypes.string,
   modified: PropTypes.string,
 };
 

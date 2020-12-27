@@ -1,10 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ApiContext from "../ApiContext";
 import config from "../config";
 
 class AddFolder extends React.Component {
-  static contextType = ApiContext;
+  static defaultProps = {
+    onAddFolder: () => {},
+  };
 
   state = {
     newFolderName: "",
@@ -15,8 +16,12 @@ class AddFolder extends React.Component {
     let { value } = e.target;
     this.setState({
       newFolderName: value,
-      validForm: true,
     });
+    if (this.state.newFolderName.length > 0) {
+      this.setState({
+        validForm: true,
+      });
+    }
   };
 
   handleAddFolder = (e) => {
@@ -24,7 +29,6 @@ class AddFolder extends React.Component {
     const newFolder = {
       name: this.state.newFolderName,
     };
-
     fetch(`${config.API_ENDPOINT}/folders`, {
       method: "POST",
       headers: {
@@ -40,8 +44,7 @@ class AddFolder extends React.Component {
         return res.json();
       })
       .then((responseJson) => {
-        this.setState({ validForm: true });
-        this.context.addFolder(responseJson);
+        this.props.onAddFolder(responseJson);
         this.props.history.push("/");
       })
       .catch((error) => {
@@ -53,12 +56,10 @@ class AddFolder extends React.Component {
   render() {
     return (
       <form onSubmit={this.handleAddFolder}>
-        <h3 style={{ color: "white" }}>
-          Type in a new folder name. Once created, click on the Noteful icon to
-          return to the main page.
-        </h3>
+        <h3 style={{ color: "white" }}>Type in a new folder name.</h3>
         <br />
         <input
+          required
           onChange={this.handleFolderNameChange}
           id="newFolder"
           type="text"
