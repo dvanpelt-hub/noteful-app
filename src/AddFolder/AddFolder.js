@@ -1,22 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ApiContext from '../ApiContext';
+import ApiContext from "../ApiContext";
 import config from "../config";
 
 class AddFolder extends React.Component {
-
   static contextType = ApiContext;
 
   state = {
     newFolderName: "",
-    validForm: false
+    validForm: false,
   };
 
   handleFolderNameChange = (e) => {
     let { value } = e.target;
     this.setState({
       newFolderName: value,
-      validForm: true
+      validForm: true,
     });
   };
 
@@ -41,9 +40,9 @@ class AddFolder extends React.Component {
         return res.json();
       })
       .then((responseJson) => {
-        this.setState({validForm: true});
-          this.context.addFolder(responseJson);
-          this.props.history.push("/");
+        this.setState({ validForm: true });
+        this.context.addFolder(responseJson);
+        this.props.history.push("/");
       })
       .catch((error) => {
         console.error({ error });
@@ -66,14 +65,16 @@ class AddFolder extends React.Component {
           name="newFolderName"
         />
         <br />
-        <button type="submit" disabled={this.state.validForm === false}>Enter!</button>
+        <button type="submit" disabled={this.state.validForm === false}>
+          Enter!
+        </button>
       </form>
     );
   }
 }
 
 AddFolder.propTypes = {
-  history: PropTypes.object,
+  history: PropTypes.object.isRequired,
   location: PropTypes.object,
   match: PropTypes.object,
 };

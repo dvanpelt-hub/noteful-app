@@ -6,7 +6,7 @@ import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 
 class AddNote extends React.Component {
   static defaultProps = {
-    onAddNote: () => {},
+    addNote: () => {},
   };
   static contextType = ApiContext;
 
@@ -102,7 +102,6 @@ class AddNote extends React.Component {
           content.value = "";
           folderId = "";
           this.context.addNote(responseJson);
-          this.props.onAddNote(responseJson);
         })
         .catch((error) => {
           this.setState(() => ({ notefulError: error }));
@@ -176,7 +175,9 @@ class AddNote extends React.Component {
           />
         </ErrorBoundary>
         <br />
-        <button type="submit">Create Note</button>
+        <button type="submit" disabled={!this.state.isFormValid}>
+          Create Note
+        </button>
         {this.state.totalErrors !== null ? (
           <p>Form is {this.state.isFormValid ? "VALID" : "INVALID"}</p>
         ) : null}
@@ -186,10 +187,9 @@ class AddNote extends React.Component {
 }
 
 AddNote.propTypes = {
-  name: PropTypes.string,
-  id: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
   modified: PropTypes.string,
-  onAddNote: PropTypes.func,
 };
 
 export default AddNote;
