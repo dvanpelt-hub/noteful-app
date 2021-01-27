@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import config from "../config";
+// import ApiContext from '.././ApiContext';
 
 class AddFolder extends React.Component {
-  static defaultProps = {
-    onAddFolder: () => {},
-  };
+  // static defaultProps = {
+  //   onAddFolder: () => {},
+  // };
 
   state = {
     newFolderName: "",
@@ -44,7 +45,8 @@ class AddFolder extends React.Component {
         return res.json();
       })
       .then((responseJson) => {
-        this.props.onAddFolder(responseJson);
+        // this.props.onAddFolder(responseJson);
+        this.context.addFolder(responseJson);
         this.props.history.push("/");
       })
       .catch((error) => {
