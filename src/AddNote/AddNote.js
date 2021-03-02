@@ -80,7 +80,7 @@ class AddNote extends React.Component {
     const noteContents = {
       name: name.value,
       content: content.value,
-      folderId: folderId.value,
+      folder_id: folderId.value,
     };
     if (this.state.totalErrors === 0) {
       fetch(`${config.API_ENDPOINT}/notes`, {
