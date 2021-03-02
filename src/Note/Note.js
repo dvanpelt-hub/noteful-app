@@ -8,9 +8,14 @@ import config from "../config";
 import "./Note.css";
 
 export default class Note extends React.Component {
+  state = {
+    trackerId: 0,
+  };
+
   static defaultProps = {
     onDeleteNote: () => {},
   };
+
   static contextType = ApiContext;
 
   handleClickDelete = (e) => {
@@ -31,7 +36,6 @@ export default class Note extends React.Component {
         this.context.deleteNote(noteId);
         // allow parent to perform extra behaviour
         this.props.onDeleteNote(noteId);
-        // this.props.history.push("/");
       })
       .catch((error) => {
         console.error({ error });
@@ -65,7 +69,7 @@ export default class Note extends React.Component {
 
 Note.propTypes = {
   name: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   modified: PropTypes.string,
   onDeleteNote: PropTypes.func.isRequired,
 };
