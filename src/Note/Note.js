@@ -33,6 +33,9 @@ export default class Note extends React.Component {
         this.props.onDeleteNote(noteId);
         // this.props.history.push("/");
       })
+      .then(() => {
+        this.forceUpdate();
+      })
       .catch((error) => {
         console.error({ error });
       });
