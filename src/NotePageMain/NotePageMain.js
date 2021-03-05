@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Note from "../Note/Note";
 import ApiContext from "../ApiContext";
-import { findNote } from "../notes-helpers";
+// import { findNote } from "../notes-helpers";
 import "./NotePageMain.css";
 import NoteListMain from "../NoteListMain/NoteListMain";
 
@@ -19,9 +19,13 @@ export default class NotePageMain extends React.Component {
   };
 
   render() {
-    const { notes = [] } = this.context;
+    const { notes } = this.context;
     const { noteId } = this.props.match.params;
-    const note = findNote(notes, noteId) || { content: "" };
+    const noteIdNum = parseInt(noteId);
+    const findNote = (notes, noteIdNum) =>
+      notes.find((note) => note.id === noteIdNum);
+    const note = findNote(notes, noteIdNum) || { content: "Here is your note" };
+
     return (
       <section className="NotePageMain">
         <Note

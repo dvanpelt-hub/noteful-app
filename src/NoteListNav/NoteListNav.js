@@ -4,16 +4,41 @@ import { NavLink, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import CircleButton from "../CircleButton/CircleButton";
 import ApiContext from "../ApiContext";
-import { countNotesForFolder } from "../notes-helpers";
+// import { countNotesForFolder } from "../notes-helpers";
 import "./NoteListNav.css";
-// import AddFolder from '../AddFolder/AddFolder'
-// import AddFolder from '../AddFolder/AddFolder'
 
 export default class NoteListNav extends React.Component {
   static contextType = ApiContext;
 
   render() {
-    const { folders = [], notes = [] } = this.context;
+    const { folders, notes } = this.context;
+    // const test1 = folders.map((folder) =>
+    //   countNotesForFolder(notes, folder.id)
+    // );
+    // console.log(test1);
+    // console.log(folders);
+
+    // const test2 = folders.map((folder) => {
+    //   console.log(folder.id);
+    // });
+
+    // console.log(folders.id);
+
+    // const countNotesForFoldertest = (notes = [], folderId) =>
+    //   notes.filter((note) => note.folderId === folderId).length;
+
+    // console.log(countNotesForFoldertest(notes, folders.id));
+
+    // console.log(test2);
+
+    // console.log(notes[0]);
+
+    const countNotesForFolder = (notes = [], folderId) =>
+      notes.filter((note) => note.folder_id === folderId).length;
+
+    // const testFilter = (notes, folderId) =>
+    //   notes.filter((note) => note.folder_id === folderId);
+
     return (
       <div className="NoteListNav">
         <ul className="NoteListNav__list">
@@ -24,6 +49,13 @@ export default class NoteListNav extends React.Component {
                 to={`/folder/${folder.id}`}
               >
                 <span className="NoteListNav__num-notes">
+                  {/* {notes.filter((note) => console.log(note.folder_id))} */}
+                  {/* {console.log(folder.id)} */}
+                  {/* {console.log(testFilter(notes, folder.id))} */}
+                  {/* {console.log(notes[0].folder_id)} */}
+
+                  {/* {console.log(countNotesForFolder(notes, folder.id))} */}
+
                   {countNotesForFolder(notes, folder.id)}
                 </span>
                 {folder.name}
